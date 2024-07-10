@@ -1,6 +1,6 @@
 import React from "react";
 import SearchSection from "./_components/SearchSection";
-import TamplateListSection from "./_components/TamplateListSection";
+import TemplateListSection from "./_components/TemplateListSection";
 
 const Dashboard = () => {
   return (
@@ -11,7 +11,7 @@ const Dashboard = () => {
 
       {/* Tamplates list section */}
 
-      <TamplateListSection />
+      <TemplateListSection />
     </div>
   );
 };
