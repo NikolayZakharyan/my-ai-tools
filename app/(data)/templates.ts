@@ -1,23 +1,38 @@
-export interface FormField {
+export enum SlugEnum {
+  BlogTitle = "generate-blog-title",
+  ProductDescription = "generate-product-description",
+  SocialMediaPost = "generate-social-media-post",
+  EmailNewsletter = "generate-email-newsletter",
+  Resume = "generate-resume",
+  EmailResponse = "generate-email-response",
+  ImageGenerator = "generate-image",
+  CodeReviewer = "review-code",
+}
+
+export interface FORM {
   label: string;
-  field: 'input' | 'textarea';
+  field: "input" | "textarea";
   name: string;
   required?: boolean;
 }
 
-export interface TemplateItem {
+export interface TEMPLATE {
   name: string;
   desc: string;
   category: string;
   icon: string;
   bgImage: string;
   aiPrompts: string;
-  slug: string;
-  form: FormField[];
+  slug: SlugEnum;  // Updated slug type to use the Slug enum
+  form: FORM[];
   likes?: number;
 }
 
-const templates: TemplateItem[] = [
+export const getTemplateBySlug = (slug: SlugEnum) => {
+  return templates.find(template => template.slug === slug) ;
+}
+
+const templates: TEMPLATE[] = [
   {
     name: "Blog title",
     desc: "Generate engaging and SEO-friendly blog titles that attract readers and improve your content's visibility.",
@@ -25,7 +40,7 @@ const templates: TemplateItem[] = [
     icon: "/template-icons/blog-title.svg",
     bgImage: "https://picsum.photos/800/600?random=1",
     aiPrompts: "Generate a catchy blog title based on the provided niche and outline. Use keywords and phrases that are relevant to the blog's content.",
-    slug: "generate-blog-title",
+    slug: SlugEnum.BlogTitle,
     form: [
       {
         label: "Enter your blog niche",
@@ -42,12 +57,12 @@ const templates: TemplateItem[] = [
   },
   {
     name: "Product Description",
-    desc: "Create compelling and detailed product descriptions that highlight key features and benefits to attract potential customers.",
+    desc: "Create compelling and detailed product descriptions that highlight key features and benefits.",
     category: "E-commerce",
     icon: "/template-icons/product-description.svg",
     bgImage: "https://picsum.photos/800/600?random=2",
     aiPrompts: "Generate a detailed product description based on the product's features and benefits. Include persuasive language to encourage purchases.",
-    slug: "generate-product-description",
+    slug: SlugEnum.ProductDescription,
     form: [
       {
         label: "Enter product name",
@@ -69,7 +84,7 @@ const templates: TemplateItem[] = [
     icon: "/template-icons/social-media-post.svg",
     bgImage: "https://picsum.photos/800/600?random=3",
     aiPrompts: "Generate an engaging social media post based on the provided content and target audience. Use hashtags and mentions appropriately.",
-    slug: "generate-social-media-post",
+    slug: SlugEnum.SocialMediaPost,
     form: [
       {
         label: "Enter post content",
@@ -91,7 +106,7 @@ const templates: TemplateItem[] = [
     icon: "/template-icons/email-newsletter.svg",
     bgImage: "https://picsum.photos/800/600?random=4",
     aiPrompts: "Generate an email newsletter based on the provided content and audience. Include headlines, subheadings, and calls to action.",
-    slug: "generate-email-newsletter",
+    slug: SlugEnum.EmailNewsletter,
     form: [
       {
         label: "Enter email content",
@@ -113,7 +128,7 @@ const templates: TemplateItem[] = [
     icon: "/template-icons/resume-builder.svg",
     bgImage: "https://picsum.photos/800/600?random=5",
     aiPrompts: "Generate a professional resume based on the provided personal information, work experience, and skills. Ensure proper formatting and structure.",
-    slug: "generate-resume",
+    slug: SlugEnum.Resume,
     form: [
       {
         label: "Enter your name",
@@ -142,7 +157,7 @@ const templates: TemplateItem[] = [
     icon: "/template-icons/email-assistant.svg",
     bgImage: "https://picsum.photos/800/600?random=6",
     aiPrompts: "Generate an appropriate email response based on the provided context and requirements. Maintain a professional tone and clarity.",
-    slug: "generate-email-response",
+    slug: SlugEnum.EmailResponse,
     form: [
       {
         label: "Enter email context",
@@ -164,7 +179,7 @@ const templates: TemplateItem[] = [
     icon: "/template-icons/image-generator.svg",
     bgImage: "https://picsum.photos/800/600?random=7",
     aiPrompts: "Generate a unique image based on the provided description and parameters. Ensure high quality and relevance to the description.",
-    slug: "generate-image",
+    slug: SlugEnum.ImageGenerator,
     form: [
       {
         label: "Enter image description",
@@ -186,7 +201,7 @@ const templates: TemplateItem[] = [
     icon: "/template-icons/code-reviewer.svg",
     bgImage: "https://picsum.photos/800/600?random=8",
     aiPrompts: "Review the provided code snippet and provide feedback on its quality, efficiency, and adherence to best practices.",
-    slug: "review-code",
+    slug: SlugEnum.CodeReviewer,
     form: [
       {
         label: "Enter code snippet",
