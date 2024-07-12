@@ -18,20 +18,25 @@ const ContentPage: React.FC<ContentPageProps> = ({ params }) => {
     getTemplateBySlug(templateSlug);
 
   const onGenerateAIContent = async (formData: any) => {
-    const templatePromps = selectedTemplate?.aiPrompts;
+    const templatePrompts = selectedTemplate?.aiPrompts;
 
-    const finalAiPrompt = JSON.stringify(formData) + "," + templatePromps;
+    // Construct a structured prompt object
+    const prompt = {
+      formData: formData,
+      templatePrompts: templatePrompts,
+    };
 
     setaiResultLoading(true);
 
-    const aiResult = await chatSession.sendMessage(finalAiPrompt);
-
-    console.log(aiResult);
-
-    setaiResultString(aiResult.response.text());
-    setaiResultLoading(false);
-
-    // return aiResult.response.text();
+    try {
+      const aiResult = await chatSession.sendMessage(prompt);
+      setaiResultString(aiResult.response.text());
+    } catch (error) {
+      console.error("Error generating AI content:", error);
+      // Handle the error appropriately (e.g., display an error message to the user)
+    } finally {
+      setaiResultLoading(false);
+    }
   };
 
   if (selectedTemplate === undefined)
