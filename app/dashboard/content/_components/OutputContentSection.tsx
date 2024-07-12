@@ -1,14 +1,28 @@
-import React, { useRef, useCallback } from "react";
+"use client";
+import React, { useRef, useCallback, useEffect } from "react";
 import { Editor } from "@toast-ui/react-editor";
 import "@toast-ui/editor/dist/toastui-editor.css";
 import { Button } from "@/components/ui/button";
 import { CopyIcon } from "lucide-react";
 
-const OutputContentSection = () => {
-  const editorRef = useRef(null);
+interface OutputContentSection {
+  aiResultString: string;
+}
+
+const OutputContentSection: React.FC<OutputContentSection> = ({
+  aiResultString,
+}) => {
+  const editorRef: any = useRef(null);
+  console.clear();
+
+  console.log(aiResultString);
+
+  useEffect(() => {
+    const editorInstance = editorRef.current.getInstance();
+    editorInstance.setMarkdown(aiResultString);
+  }, [aiResultString]);
 
   const handleFocus = useCallback(() => {}, []);
-
   const copyClipboardData = useCallback(() => {}, []);
 
   return (
@@ -33,6 +47,9 @@ const OutputContentSection = () => {
           onFocus={handleFocus}
           useCommandShortcut={true}
           hideModeSwitch={true}
+          onChange={() =>
+            console.log(editorRef.current.getInstance().getMarkdown())
+          }
         />
       </div>
     </div>

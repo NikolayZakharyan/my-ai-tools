@@ -8,12 +8,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 interface FormContentSectionProps {
   selectedTemplate: TEMPLATE;
-  onUserFormContentSubmit: Function;
+  onGenerateAIContent: Function;
+  aiResultloading: boolean;
 }
 
 const FormContentSection: React.FC<FormContentSectionProps> = ({
   selectedTemplate,
-  onUserFormContentSubmit,
+  onGenerateAIContent,
+  aiResultloading,
 }) => {
   const [formData, setformData] = useState({});
 
@@ -31,12 +33,10 @@ const FormContentSection: React.FC<FormContentSectionProps> = ({
     });
   }, []);
 
-  const action = (e: any): void | undefined => {
+  const onSubmit = (e: any): void | undefined => {
     e.preventDefault();
 
-    onUserFormContentSubmit(formData);
-
-    console.log(formData);
+    onGenerateAIContent(formData);
   };
 
   return (
@@ -74,7 +74,7 @@ const FormContentSection: React.FC<FormContentSectionProps> = ({
 
       <div className="border-b w-full pt-2"></div>
 
-      <form onSubmit={action}>
+      <form onSubmit={onSubmit}>
         <div className="flex flex-col gap-2 pt-4">
           {selectedTemplate.form.map(
             ({ label, field, name, required }: FORM) => {
@@ -115,8 +115,8 @@ const FormContentSection: React.FC<FormContentSectionProps> = ({
           )}
         </div>
         <div className="pt-4 w-full">
-          <Button type="submit" className="w-full">
-            Search
+          <Button type="submit" className="w-full" disabled={aiResultloading}>
+            {aiResultloading ? "Loading ..." : "Generate"}
           </Button>
         </div>
       </form>
