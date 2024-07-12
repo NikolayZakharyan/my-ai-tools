@@ -21,9 +21,12 @@ const ContentPage: React.FC<ContentPageProps> = ({ params }) => {
     return <>SOMTHING GET WRONG: {templateSlug}</>;
 
   return (
-    <div>
+    <div className="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
       <FormContentSection selectedTemplate={selectedTemplate} />
-      <OutputContentSection />
+
+      <div className="col-span-2">
+        <OutputContentSection />
+      </div>
     </div>
   );
 };
