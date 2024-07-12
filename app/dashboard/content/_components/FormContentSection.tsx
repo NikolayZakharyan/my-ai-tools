@@ -8,10 +8,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 interface FormContentSectionProps {
   selectedTemplate: TEMPLATE;
+  onUserFormContentSubmit: Function;
 }
 
 const FormContentSection: React.FC<FormContentSectionProps> = ({
   selectedTemplate,
+  onUserFormContentSubmit,
 }) => {
   const [formData, setformData] = useState({});
 
@@ -31,6 +33,8 @@ const FormContentSection: React.FC<FormContentSectionProps> = ({
 
   const action = (e: any): void | undefined => {
     e.preventDefault();
+
+    onUserFormContentSubmit(formData);
 
     console.log(formData);
   };

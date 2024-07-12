@@ -1,11 +1,8 @@
+"use client";
 import React from "react";
 import FormContentSection from "../_components/FormContentSection";
 import OutputContentSection from "../_components/OutputContentSection";
-import templates, {
-  TEMPLATE,
-  getTemplateBySlug,
-  SlugEnum,
-} from "@/app/(data)/templates";
+import { TEMPLATE, getTemplateBySlug, SlugEnum } from "@/app/(data)/templates";
 
 interface ContentPageProps {
   params: Object;
@@ -17,12 +14,17 @@ const ContentPage: React.FC<ContentPageProps> = ({ params }) => {
   const selectedTemplate: TEMPLATE | undefined =
     getTemplateBySlug(templateSlug);
 
+  const GenerateAIContent = () => {};
+
   if (selectedTemplate === undefined)
     return <>SOMTHING GET WRONG: {templateSlug}</>;
 
   return (
     <div className="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-      <FormContentSection selectedTemplate={selectedTemplate} />
+      <FormContentSection
+        selectedTemplate={selectedTemplate}
+        onUserFormContentSubmit={() => {}}
+      />
 
       <div className="col-span-2">
         <OutputContentSection />
