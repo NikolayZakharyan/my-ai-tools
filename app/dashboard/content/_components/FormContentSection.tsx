@@ -21,11 +21,7 @@ const FormContentSection: React.FC<FormContentSectionProps> = ({
   const [formData, setformData] = useState({});
 
   const onChangeFormData = useCallback((e: any) => {
-    console.log(e);
     const { name, value } = e.target;
-
-    console.log(name, value);
-
     setformData((old) => {
       return {
         ...old,
@@ -82,7 +78,7 @@ const FormContentSection: React.FC<FormContentSectionProps> = ({
               switch (field) {
                 case "input":
                   return (
-                    <div>
+                    <div key={name}>
                       <label className="text-xs font-medium" htmlFor={name}>
                         {label}
                       </label>
@@ -96,7 +92,7 @@ const FormContentSection: React.FC<FormContentSectionProps> = ({
                   );
                 case "textarea":
                   return (
-                    <div>
+                    <div key={name}>
                       <label className="text-xs font-medium" htmlFor={name}>
                         {label}
                       </label>

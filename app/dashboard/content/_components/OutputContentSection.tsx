@@ -12,10 +12,6 @@ const OutputContentSection: React.FC<OutputContentSection> = ({
   aiResultString,
 }) => {
   const editorRef: any = useRef(null);
-  console.clear();
-
-  console.log(aiResultString);
-
   useEffect(() => {
     const editorInstance = editorRef.current.getInstance();
     editorInstance.setMarkdown(aiResultString);
@@ -46,9 +42,9 @@ const OutputContentSection: React.FC<OutputContentSection> = ({
           onFocus={handleFocus}
           useCommandShortcut={true}
           hideModeSwitch={true}
-          onChange={() =>
-            console.log(editorRef.current.getInstance().getMarkdown())
-          }
+          // onChange={() =>
+          //   // console.log(editorRef.current.getInstance().getMarkdown())
+          // }
         />
       </div>
     </div>

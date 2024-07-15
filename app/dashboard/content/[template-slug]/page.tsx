@@ -4,6 +4,8 @@ import FormContentSection from "../_components/FormContentSection";
 import OutputContentSection from "../_components/OutputContentSection";
 import { TEMPLATE, getTemplateBySlug, SlugEnum } from "@/app/(data)/templates";
 import { chatSession } from "@/utils/AiModul";
+import { useUser } from "@clerk/nextjs";
+import { _createAiOutput } from "@/utils/drizzle/schemas/ai-output/handler";
 
 interface ContentPageProps {
   params: Object;
@@ -13,6 +15,10 @@ const ContentPage: React.FC<ContentPageProps> = ({ params }) => {
   const [aiResultloading, setaiResultLoading] = useState<boolean>(false);
   const [aiResultString, setaiResultString] = useState<string>("");
 
+  const { user } = useUser();
+
+  console.log(user);
+
   const templateSlug: SlugEnum = Object.values(params)[0];
   const selectedTemplate: TEMPLATE | undefined =
     getTemplateBySlug(templateSlug);
@@ -20,16 +26,20 @@ const ContentPage: React.FC<ContentPageProps> = ({ params }) => {
   const onGenerateAIContent = async (formData: any) => {
     const templatePrompts = selectedTemplate?.aiPrompts;
 
-    // Construct a structured prompt object
-    const prompt = {
-      formData: formData,
-      templatePrompts: templatePrompts,
-    };
+    const prompt = `${JSON.stringify(formData)}, ${templatePrompts}`;
 
     setaiResultLoading(true);
 
     try {
       const aiResult = await chatSession.sendMessage(prompt);
+
+      const result = await _createAiOutput(
+        formData,
+        templateSlug,
+        aiResult.response.text(),
+        user
+      );
+
       setaiResultString(aiResult.response.text());
     } catch (error) {
       console.error("Error generating AI content:", error);
