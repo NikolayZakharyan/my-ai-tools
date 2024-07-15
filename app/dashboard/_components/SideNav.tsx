@@ -36,6 +36,7 @@ const SideNav = () => {
         {menuList.map((item, i) => {
           return (
             <Link
+              key={item.path}
               href={item.path}
               className="flex gap-2 border w-full p-2 rounded-lg cursor-pointer hover:bg-primary hover:text-white "
             >
