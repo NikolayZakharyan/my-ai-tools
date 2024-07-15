@@ -17,8 +17,6 @@ const ContentPage: React.FC<ContentPageProps> = ({ params }) => {
 
   const { user } = useUser();
 
-  console.log(user);
-
   const templateSlug: SlugEnum = Object.values(params)[0];
   const selectedTemplate: TEMPLATE | undefined =
     getTemplateBySlug(templateSlug);
