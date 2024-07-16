@@ -1,5 +1,4 @@
-import { timestamp } from "drizzle-orm/pg-core";
-import { serial, text, pgTable, varchar } from "drizzle-orm/pg-core";
+import { serial, text, pgTable, varchar, timestamp } from "drizzle-orm/pg-core";
 
 
 export const aiOutput = pgTable('aiOutput',{
@@ -8,5 +7,5 @@ export const aiOutput = pgTable('aiOutput',{
     aiResponse:text('aiResponse'),
     templateSlag: varchar('templateSlag').notNull(),
     createdBy: varchar('createdBy').notNull(),
-    createdAt: timestamp('createdAt').defaultNow().notNull().$default(()=>new Date()),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
 }) 

@@ -1,13 +1,15 @@
-import { pgTable,varchar } from "drizzle-orm/pg-core";
+import { pgTable,varchar,serial,timestamp } from "drizzle-orm/pg-core";
 
 
 
 export const  UserTable = pgTable("UserTable",{
+    id:serial('id').primaryKey(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+
     user_id: varchar('user_id').unique().notNull(),
     email:varchar('email').unique().notNull(),
-    user_name:varchar('user_name').unique(),
+    last_name:varchar('last_name'),
     first_name:varchar('first_name'),
-    full_name:varchar('full_name'),
 
 }) 
 

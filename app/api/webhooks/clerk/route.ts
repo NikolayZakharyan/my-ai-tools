@@ -1,6 +1,7 @@
 import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
+import { _createUser } from '@/utils/drizzle/schemas/users/handler'
 
 export async function POST(req: Request) {
 
@@ -49,17 +50,19 @@ export async function POST(req: Request) {
 
   // Do something with the payload
   // For this guide, you simply log the payload to the console
-  console.log(evt.data)
   const { id } = evt.data;
   const eventType = evt.type;
   console.log(eventType)
   if (evt.type === 'user.created') {
 
+console.log(evt.data.id)
+console.log(evt.data.id)
 
-
+_createUser(evt.data)
 
     console.log('userId:', evt.data.id)
   }
+
 
   return new Response('', { status: 200 })
 }
