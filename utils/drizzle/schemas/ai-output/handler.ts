@@ -6,24 +6,19 @@ import { aiOutput } from "./schema";
 const sql = neon(process.env.NEXT_PUBLIC_DRIZZLE_DB_URL!);
 const db = drizzle(sql, { schema });
 
+export const _createAiOutput = async (
+  formData: any,
+  aiResponse: any,
+  templateSlag: any,
+  user: any
+) => {
+  const result = await db.insert(aiOutput).values({
+    formData: formData,
+    aiResponse,
+    templateSlag,
+    createdBy: user?.primaryEmailAddress?.emailAddress,
+    // createdAt:'12-02-2024',
+  });
 
-
-export const _createAiOutput = async (formData:any,aiResponse:any,templateSlag:any,user:any) => {
-
-
-    const result = await db.insert(aiOutput).values({
-        formData: formData,
-        aiResponse,
-        templateSlag,
-        createdBy: user?.primaryEmailAddress?.emailAddress,
-        // createdAt:'12-02-2024',
-      });
-
-
-
-      return result
-
-
-}
-
-
+  return result;
+};
