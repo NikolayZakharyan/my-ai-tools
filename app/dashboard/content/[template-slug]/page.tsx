@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FormContentSection from "../_components/FormContentSection";
 import OutputContentSection from "../_components/OutputContentSection";
 import { TEMPLATE, getTemplateBySlug, SlugEnum } from "@/app/(data)/templates";

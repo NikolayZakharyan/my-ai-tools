@@ -1,19 +1,49 @@
 import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
 import * as schema from "./schema";
-import { UserTable } from "./schema";
+import { users, emailAddresses } from "./schema";
 
 const sql = neon(process.env.NEXT_PUBLIC_DRIZZLE_DB_URL!);
 const db = drizzle(sql, { schema });
 
-export const _createUser = async (user: any) => {
-  const result = await db.insert(UserTable).values({
-    user_id: user.id,
-    email: user.email_addresses[0].email_address,
-    first_name: user.first_name,
-    last_name: user.last_name,
-    createdAt: new Date(user.created_at),
+export const _createUser = async (clerkUser: any) => {
+  console.clear();
+
+  const user = await db
+    .insert(users)
+    .values({
+      clerkId: clerkUser.id,
+      primaryEmailAddressId: clerkUser.primary_email_address_id,
+      createdAt: new Date(clerkUser.created_at),
+      firstName: clerkUser.first_name,
+      lastName: clerkUser.last_name,
+    })
+    .returning({
+      userId: users.id,
+    });
+
+  console.log(user);
+
+  const emailAddressesValues = clerkUser.email_addresses.map((item: any) => {
+    return {
+      userId: user[0].userId,
+      emailAddress: item.email_address,
+      emailId: item.id,
+      object: item.object,
+    };
   });
 
-  return result;
+  const emailAddresse = await db
+    .insert(emailAddresses)
+    .values(emailAddressesValues);
+};
+
+export const _emailAddresse = async () => {
+  let a = await db.query.users.findFirst({
+    with: {
+      emailAddresses: true,
+    },
+  });
+
+  return a;
 };
