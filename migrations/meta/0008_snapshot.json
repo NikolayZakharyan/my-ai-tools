@@ -1,0 +1,194 @@
+{
+  "id": "5ecbc0c7-8aad-4afd-9db3-83b35230fced",
+  "prevId": "4ed67a04-0f9c-482f-a0f5-4f0f5e737fe3",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.aiOutput": {
+      "name": "aiOutput",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "formData": {
+          "name": "formData",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "aiResponse": {
+          "name": "aiResponse",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "templateSlag": {
+          "name": "templateSlag",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdBy": {
+          "name": "createdBy",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "aiOutput_user_id_users_id_fk": {
+          "name": "aiOutput_user_id_users_id_fk",
+          "tableFrom": "aiOutput",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.emailAddresses": {
+      "name": "emailAddresses",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "email_address": {
+          "name": "email_address",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email_id": {
+          "name": "email_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "object": {
+          "name": "object",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "emailAddresses_user_id_users_id_fk": {
+          "name": "emailAddresses_user_id_users_id_fk",
+          "tableFrom": "emailAddresses",
+          "tableTo": "users",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "emailAddresses_email_id_unique": {
+          "name": "emailAddresses_email_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email_id"
+          ]
+        }
+      }
+    },
+    "public.users": {
+      "name": "users",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "clerk_id": {
+          "name": "clerk_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "primary_email_address_id": {
+          "name": "primary_email_address_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "last_name": {
+          "name": "last_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'03'"
+        },
+        "first_name": {
+          "name": "first_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'o3'"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

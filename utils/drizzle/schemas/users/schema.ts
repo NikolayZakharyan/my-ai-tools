@@ -15,8 +15,8 @@ export const users = pgTable("users", {
   clerkId: varchar("clerk_id").notNull(),
   primaryEmailAddressId: varchar("primary_email_address_id").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  lastName: varchar("last_name"),
-  firstName: varchar("first_name"),
+  lastName: text("last_name").default("03"),
+  firstName: text("first_name").default("o3"),
 });
 
 export const usersRelations = relations(users, ({ one }) => ({

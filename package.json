@@ -8,7 +8,11 @@
     "start": "next start",
     "lint": "next lint",
     "zz:push": "drizzle-kit push",
-    "zz:studio": "drizzle-kit studio"
+    "zz:studio": "drizzle-kit studio",
+    "zz:generate:custom": "drizzle-kit generate --custom --name=CUSTOM_META",
+    "zz:generate": "tsx generateMigration.ts",
+    "zz:migrate": "tsx ./utils/drizzle/migrate.ts",
+    "zz:drop": "drizzle-kit drop --out=./migrations"
   },
   "dependencies": {
     "@clerk/nextjs": "^5.2.2",
@@ -19,6 +23,7 @@
     "@toast-ui/react-editor": "^3.2.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "dotenv": "^16.4.5",
     "drizzle-orm": "^0.32.0",
     "lucide-react": "^0.403.0",
     "moment": "^2.30.1",
