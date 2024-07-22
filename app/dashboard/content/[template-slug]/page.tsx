@@ -5,7 +5,7 @@ import OutputContentSection from "../_components/OutputContentSection";
 import { TEMPLATE, getTemplateBySlug, SlugEnum } from "@/app/(data)/templates";
 import { chatSession } from "@/utils/AiModul";
 import { useUser } from "@clerk/nextjs";
-import { _createAiOutput } from "@/utils/drizzle/schemas/ai-output/handler";
+import { _createAiOutput } from "@/drizzle/db/schemas/ai-output/handler";
 
 interface ContentPageProps {
   params: Object;

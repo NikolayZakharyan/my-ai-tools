@@ -1,9 +1,60 @@
 {
-  "id": "a748da65-468a-480a-921d-c81e1cd0ed5b",
-  "prevId": "5ecbc0c7-8aad-4afd-9db3-83b35230fced",
+  "id": "2889e5cc-529a-4012-9278-52f2b69eb8c8",
+  "prevId": "9a99ceed-245d-4e6f-94ce-1de100a4305d",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
+    "public.aiForms": {
+      "name": "aiForms",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "aiFormFields": {
+          "name": "aiFormFields",
+          "type": "aiFormFields",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'input'"
+        },
+        "require": {
+          "name": "require",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "template_td": {
+          "name": "template_td",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "aiForms_template_td_aiTamplates_id_fk": {
+          "name": "aiForms_template_td_aiTamplates_id_fk",
+          "tableFrom": "aiForms",
+          "tableTo": "aiTamplates",
+          "columnsFrom": [
+            "template_td"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
     "public.aiOutput": {
       "name": "aiOutput",
       "schema": "",
@@ -57,17 +108,62 @@
         "aiOutput_user_id_users_id_fk": {
           "name": "aiOutput_user_id_users_id_fk",
           "tableFrom": "aiOutput",
+          "tableTo": "users",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "users",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.aiTamplates": {
+      "name": "aiTamplates",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(80)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'My ai template name'"
+        },
+        "description": {
+          "name": "description",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Ai description for intraduce specifictions'"
+        },
+        "ai_prompt": {
+          "name": "ai_prompt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'Set yours ai specific promps...'"
+        },
+        "category": {
+          "name": "category",
+          "type": "aiTemplateCategoryEnum",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'development'"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
@@ -111,25 +207,25 @@
         "emailAddresses_user_id_users_id_fk": {
           "name": "emailAddresses_user_id_users_id_fk",
           "tableFrom": "emailAddresses",
+          "tableTo": "users",
           "columnsFrom": [
             "user_id"
           ],
-          "tableTo": "users",
           "columnsTo": [
             "id"
           ],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "emailAddresses_email_id_unique": {
           "name": "emailAddresses_email_id_unique",
+          "nullsNotDistinct": false,
           "columns": [
             "email_id"
-          ],
-          "nullsNotDistinct": false
+          ]
         }
       }
     },
@@ -164,17 +260,15 @@
         },
         "last_name": {
           "name": "last_name",
-          "type": "text",
+          "type": "varchar",
           "primaryKey": false,
-          "notNull": false,
-          "default": "'03'"
+          "notNull": false
         },
         "first_name": {
           "name": "first_name",
-          "type": "text",
+          "type": "varchar",
           "primaryKey": false,
-          "notNull": false,
-          "default": "'o3'"
+          "notNull": false
         }
       },
       "indexes": {},
@@ -183,7 +277,25 @@
       "uniqueConstraints": {}
     }
   },
-  "enums": {},
+  "enums": {
+    "public.aiFormFields": {
+      "name": "aiFormFields",
+      "schema": "public",
+      "values": [
+        "input",
+        "textarea"
+      ]
+    },
+    "public.aiTemplateCategoryEnum": {
+      "name": "aiTemplateCategoryEnum",
+      "schema": "public",
+      "values": [
+        "development",
+        "content",
+        "blog"
+      ]
+    }
+  },
   "schemas": {},
   "sequences": {},
   "_meta": {

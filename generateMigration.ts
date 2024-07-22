@@ -1,13 +1,15 @@
 import { exec } from "child_process";
-import path from "path";
 
 const args = process.argv.slice(2);
+
+console.log(args);
+
 if (args.length < 1) {
   console.error("Please provide a migration name.");
   process.exit(1);
 }
 
-const migrationName = args[0];
+const migrationName = args.join("_");
 
 exec(
   `drizzle-kit generate --name ${migrationName}`,
