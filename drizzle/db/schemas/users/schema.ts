@@ -8,6 +8,7 @@ import {
 } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 import { aiOutput } from "../ai-output/schema";
+import { aiTemplates } from "../ai-templates/schema";
 
 export const users = pgTable("users", {
   id: serial("id").primaryKey().notNull(),
@@ -24,6 +25,7 @@ export const usersRelations = relations(users, ({ one, many }) => ({
     fields: [users.id],
     references: [emailAddresses.userId],
   }),
+  aiTemplates: many(aiTemplates),
   aiOutput: many(aiOutput),
 }));
 

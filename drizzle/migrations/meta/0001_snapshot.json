@@ -1,9 +1,60 @@
 {
-  "id": "21f24311-2da4-4a6b-b5c7-fb1771992695",
-  "prevId": "bac33499-35ac-4dc3-9e26-22cf1ff46a61",
+  "id": "f2d7cdb5-b4f3-45a7-8596-80f8b6eeb4df",
+  "prevId": "738f9e69-b0f7-40a9-af76-761184d0a3f3",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
+    "public.aiForms": {
+      "name": "aiForms",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "aiFormField": {
+          "name": "aiFormField",
+          "type": "aiFormField",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'input'"
+        },
+        "require": {
+          "name": "require",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "template_td": {
+          "name": "template_td",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "aiForms_template_td_aiTamplates_id_fk": {
+          "name": "aiForms_template_td_aiTamplates_id_fk",
+          "tableFrom": "aiForms",
+          "tableTo": "aiTamplates",
+          "columnsFrom": [
+            "template_td"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
     "public.aiOutput": {
       "name": "aiOutput",
       "schema": "",
@@ -60,6 +111,71 @@
           "tableTo": "users",
           "columnsFrom": [
             "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.aiTamplates": {
+      "name": "aiTamplates",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "userId": {
+          "name": "userId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(80)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'My ai template name'"
+        },
+        "description": {
+          "name": "description",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'Ai description for intraduce specifictions'"
+        },
+        "ai_prompt": {
+          "name": "ai_prompt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'Set yours ai specific promps...'"
+        },
+        "aiTemplateCategory": {
+          "name": "aiTemplateCategory",
+          "type": "aiTemplateCategory",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'development'"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "aiTamplates_userId_users_id_fk": {
+          "name": "aiTamplates_userId_users_id_fk",
+          "tableFrom": "aiTamplates",
+          "tableTo": "users",
+          "columnsFrom": [
+            "userId"
           ],
           "columnsTo": [
             "id"
@@ -164,17 +280,15 @@
         },
         "last_name": {
           "name": "last_name",
-          "type": "text",
+          "type": "varchar",
           "primaryKey": false,
-          "notNull": false,
-          "default": "'01'"
+          "notNull": false
         },
         "first_name": {
           "name": "first_name",
-          "type": "text",
+          "type": "varchar",
           "primaryKey": false,
-          "notNull": false,
-          "default": "'o1'"
+          "notNull": false
         }
       },
       "indexes": {},
@@ -183,7 +297,26 @@
       "uniqueConstraints": {}
     }
   },
-  "enums": {},
+  "enums": {
+    "public.aiFormField": {
+      "name": "aiFormField",
+      "schema": "public",
+      "values": [
+        "input",
+        "textarea"
+      ]
+    },
+    "public.aiTemplateCategory": {
+      "name": "aiTemplateCategory",
+      "schema": "public",
+      "values": [
+        "development",
+        "content",
+        "blog",
+        "marketing"
+      ]
+    }
+  },
   "schemas": {},
   "sequences": {},
   "_meta": {

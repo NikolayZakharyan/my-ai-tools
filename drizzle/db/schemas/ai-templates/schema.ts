@@ -1,10 +1,13 @@
-import { pgTable, serial, text, varchar } from "drizzle-orm/pg-core";
+import { integer, pgTable, serial, text, varchar } from "drizzle-orm/pg-core";
 import { aiTemplateCategoryEnum, defaultAiTemplateCategory } from "./enums";
 import { relations } from "drizzle-orm";
 import { aiForm } from "../ai-forms/schema";
+import { users } from "../users/schema";
 
 export const aiTemplates = pgTable("aiTamplates", {
   id: serial("id").primaryKey().notNull(),
+
+  userId: integer("userId").references(() => users.id),
 
   name: varchar("name", { length: 80 })
     .notNull()
@@ -14,11 +17,11 @@ export const aiTemplates = pgTable("aiTamplates", {
     "Ai description for intraduce specifictions"
   ),
 
-  aiPrompts: text("ai_prompt")
+  aiPrompt: text("ai_prompt")
     .notNull()
     .default("Set yours ai specific promps..."),
 
-  category: aiTemplateCategoryEnum("category")
+  aiTemplateCategory: aiTemplateCategoryEnum("aiTemplateCategory")
     .default(defaultAiTemplateCategory)
     .notNull(),
 });

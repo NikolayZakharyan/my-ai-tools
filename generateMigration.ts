@@ -1,8 +1,6 @@
-import { exec } from "child_process";
+import { spawn } from "child_process";
 
 const args = process.argv.slice(2);
-
-console.log(args);
 
 if (args.length < 1) {
   console.error("Please provide a migration name.");
@@ -11,17 +9,24 @@ if (args.length < 1) {
 
 const migrationName = args.join("_");
 
-exec(
-  `drizzle-kit generate --name ${migrationName}`,
-  (error, stdout, stderr) => {
-    if (error) {
-      console.error(`Error generating migration: ${error.message}`);
-      return;
-    }
-    if (stderr) {
-      console.error(`stderr: ${stderr}`);
-      return;
-    }
-    console.log(`stdout: ${stdout}`);
-  }
-);
+const drizzleProcess = spawn("drizzle-kit", [
+  "generate",
+  "--name",
+  migrationName,
+]);
+
+drizzleProcess.stdout.on("data", (data) => {
+  console.log(`stdout: ${data}`);
+});
+
+drizzleProcess.stderr.on("data", (data) => {
+  console.error(`stderr: ${data}`);
+});
+
+drizzleProcess.on("error", (error) => {
+  console.error(`Error generating migration: ${error.message}`);
+});
+
+drizzleProcess.on("close", (code) => {
+  console.log(`Child process exited with code ${code}`);
+});

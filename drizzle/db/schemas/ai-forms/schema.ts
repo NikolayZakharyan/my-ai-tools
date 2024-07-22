@@ -5,7 +5,7 @@ import { aiTemplates } from "../ai-templates/schema";
 export const aiForm = pgTable("aiForms", {
   id: serial("id").primaryKey().notNull(),
 
-  field: aiFormFieldsEnums("aiFormFields").default(defaultAiFormField),
+  aiFormField: aiFormFieldsEnums("aiFormField").default(defaultAiFormField),
 
   require: boolean("require").default(false),
 
