@@ -1,0 +1,1 @@
+ALTER TABLE "aiTamplates" ALTER COLUMN "form" SET DEFAULT '[{"field":"input","require":false}]'::json;

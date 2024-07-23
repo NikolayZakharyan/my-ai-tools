@@ -12,9 +12,7 @@ END $$;
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "aiForms" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"aiFormField" "aiFormField" DEFAULT 'input',
-	"require" boolean DEFAULT false,
-	"template_td" integer
+	"aiFormField" "aiFormField" DEFAULT 'input'
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "aiOutput" (
@@ -29,6 +27,7 @@ CREATE TABLE IF NOT EXISTS "aiOutput" (
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "aiTamplates" (
 	"id" serial PRIMARY KEY NOT NULL,
+	"userId" integer,
 	"name" varchar(80) DEFAULT 'My ai template name' NOT NULL,
 	"description" varchar(255) DEFAULT 'Ai description for intraduce specifictions',
 	"ai_prompt" text DEFAULT 'Set yours ai specific promps...' NOT NULL,
@@ -54,13 +53,13 @@ CREATE TABLE IF NOT EXISTS "users" (
 );
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "aiForms" ADD CONSTRAINT "aiForms_template_td_aiTamplates_id_fk" FOREIGN KEY ("template_td") REFERENCES "public"."aiTamplates"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "aiOutput" ADD CONSTRAINT "aiOutput_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "aiOutput" ADD CONSTRAINT "aiOutput_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "aiTamplates" ADD CONSTRAINT "aiTamplates_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;

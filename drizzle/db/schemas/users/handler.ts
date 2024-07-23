@@ -1,14 +1,11 @@
-import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
 import * as schema from "./schema";
 import { users, emailAddresses } from "./schema";
+import { sql } from "../../sql";
 
-const sql = neon(process.env.NEXT_PUBLIC_DRIZZLE_DB_URL!);
 const db = drizzle(sql, { schema });
 
 export const _createUser = async (clerkUser: any) => {
-  console.clear();
-
   const user = await db
     .insert(users)
     .values({

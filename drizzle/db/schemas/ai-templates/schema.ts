@@ -1,8 +1,21 @@
-import { integer, pgTable, serial, text, varchar } from "drizzle-orm/pg-core";
+import {
+  integer,
+  json,
+  pgTable,
+  serial,
+  text,
+  varchar,
+} from "drizzle-orm/pg-core";
 import { aiTemplateCategoryEnum, defaultAiTemplateCategory } from "./enums";
 import { relations } from "drizzle-orm";
 import { aiForm } from "../ai-forms/schema";
 import { users } from "../users/schema";
+import { defaultAiFormField } from "../ai-forms/enums";
+
+type form = {
+  field: string;
+  require: boolean;
+}[];
 
 export const aiTemplates = pgTable("aiTamplates", {
   id: serial("id").primaryKey().notNull(),
@@ -24,6 +37,10 @@ export const aiTemplates = pgTable("aiTamplates", {
   aiTemplateCategory: aiTemplateCategoryEnum("aiTemplateCategory")
     .default(defaultAiTemplateCategory)
     .notNull(),
+
+  form: json("form")
+    .$type<form>()
+    .default([{ field: defaultAiFormField, require: false }]),
 });
 
 export const aiTemplateRelations = relations(aiTemplates, ({ many }) => ({

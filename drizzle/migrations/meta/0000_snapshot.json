@@ -1,5 +1,5 @@
 {
-  "id": "738f9e69-b0f7-40a9-af76-761184d0a3f3",
+  "id": "070bdbb9-182e-4a78-b6f3-5d3d7168857f",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -21,37 +21,10 @@
           "primaryKey": false,
           "notNull": false,
           "default": "'input'"
-        },
-        "require": {
-          "name": "require",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": false,
-          "default": false
-        },
-        "template_td": {
-          "name": "template_td",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
         }
       },
       "indexes": {},
-      "foreignKeys": {
-        "aiForms_template_td_aiTamplates_id_fk": {
-          "name": "aiForms_template_td_aiTamplates_id_fk",
-          "tableFrom": "aiForms",
-          "tableTo": "aiTamplates",
-          "columnsFrom": [
-            "template_td"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
@@ -132,6 +105,12 @@
           "primaryKey": true,
           "notNull": true
         },
+        "userId": {
+          "name": "userId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
         "name": {
           "name": "name",
           "type": "varchar(80)",
@@ -163,7 +142,21 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "aiTamplates_userId_users_id_fk": {
+          "name": "aiTamplates_userId_users_id_fk",
+          "tableFrom": "aiTamplates",
+          "tableTo": "users",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
