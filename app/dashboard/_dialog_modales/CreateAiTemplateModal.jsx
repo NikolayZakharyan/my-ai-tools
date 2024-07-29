@@ -32,7 +32,7 @@ import {
 import { _createAiTemplate } from "@/drizzle/db/schemas/ai-templates/handler";
 import { useUser } from "@clerk/nextjs";
 
-const CreateAiTemplateModal = ({}) => {
+const CreateAiTemplateModal = ({ resultCallback }) => {
   const { user } = useUser();
   const [open, setOpen] = useState(false);
   const [templateData, settemplateData] = useState({
@@ -105,6 +105,7 @@ const CreateAiTemplateModal = ({}) => {
     });
 
     setOpen(false);
+    resultCallback(response, "CREATE");
     console.log(response);
   };
 

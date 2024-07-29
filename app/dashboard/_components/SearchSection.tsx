@@ -25,10 +25,6 @@ const SearchSection = () => {
         <div className="w-full">
           <Input placeholder="Seach by category..." />
         </div>
-
-        <div>
-          <CreateAiTemplateModal />
-        </div>
       </div>
     </div>
   );

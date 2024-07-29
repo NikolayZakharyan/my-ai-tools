@@ -1,9 +1,11 @@
 import {
+  date,
   integer,
   json,
   pgTable,
   serial,
   text,
+  timestamp,
   varchar,
 } from "drizzle-orm/pg-core";
 import { aiTemplateCategoryEnum, defaultAiTemplateCategory } from "./enums";
@@ -41,6 +43,8 @@ export const aiTemplates = pgTable("aiTamplates", {
   form: json("form")
     .$type<form>()
     .default([{ field: defaultAiFormField, require: false }]),
+
+  createdAt: timestamp("createdAt").notNull().defaultNow(),
 });
 
 export const aiTemplateRelations = relations(aiTemplates, ({ many }) => ({

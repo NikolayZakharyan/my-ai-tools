@@ -1,7 +1,7 @@
 import { drizzle } from "drizzle-orm/neon-http";
 import * as schema from "./schema";
 import { neon_sql } from "../../sql";
-import { eq, sql } from "drizzle-orm";
+import { asc, desc, eq, sql } from "drizzle-orm";
 import { _getUserIdByClarkId } from "../users/handler";
 
 const db = drizzle(neon_sql, { schema });
@@ -9,6 +9,7 @@ const db = drizzle(neon_sql, { schema });
 export const _getAiTemplates = async () => {
   try {
     const result = await db.query.aiTemplates.findMany({
+      orderBy: [desc(schema.aiTemplates.createdAt)],
       extras: {
         slug: sql`LOWER(REPLACE(${schema.aiTemplates.name},' ','-'))`.as(
           "slug"
@@ -29,6 +30,18 @@ export const _getTemplateById = async (templateId: String) => {
       .select()
       .from(schema.aiTemplates)
       .where(eq(schema.aiTemplates.id, +templateId));
+
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const _deleteTemplateById = async (id: number) => {
+  try {
+    const result = db
+      .delete(schema.aiTemplates)
+      .where(eq(schema.aiTemplates.id, id));
 
     return result;
   } catch (err) {
