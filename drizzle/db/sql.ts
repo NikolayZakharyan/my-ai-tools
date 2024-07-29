@@ -5,6 +5,6 @@ import { neon } from "@neondatabase/serverless";
 // import * as templates from "./schemas/ai-templates/schema";
 // import * as outputs from "./schemas/ai-output/schema";
 
-export const sql = neon(process.env.NEXT_PUBLIC_DRIZZLE_DB_URL!);
+export const neon_sql = neon(process.env.NEXT_PUBLIC_DRIZZLE_DB_URL!);
 
 // export const db = drizzle(sql, { schema: { users, templates, outputs } });

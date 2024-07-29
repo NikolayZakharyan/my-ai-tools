@@ -3,9 +3,9 @@ import { drizzle } from "drizzle-orm/neon-http";
 import * as schema from "./schema";
 import { aiOutput } from "./schema";
 import { eq } from "drizzle-orm";
-import { sql } from "../../sql";
+import { neon_sql } from "../../sql";
 
-const db = drizzle(sql, { schema });
+const db = drizzle(neon_sql, { schema });
 
 export const _createAiOutput = async (
   formData: any,

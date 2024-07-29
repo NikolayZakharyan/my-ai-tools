@@ -4,24 +4,19 @@ import FormContentSection from "../_components/FormContentSection";
 import OutputContentSection from "../_components/OutputContentSection";
 import { TEMPLATE, getTemplateBySlug, SlugEnum } from "@/app/(data)/templates";
 import { chatSession } from "@/utils/AiModul";
-import { useUser } from "@clerk/nextjs";
 import { _createAiOutput } from "@/drizzle/db/schemas/ai-output/handler";
 
-interface ContentPageProps {
-  params: Object;
-}
 
-const ContentPage: React.FC<ContentPageProps> = ({ params }) => {
-  const [aiResultloading, setaiResultLoading] = useState<boolean>(false);
-  const [aiResultString, setaiResultString] = useState<string>("");
+const ContentPage = ({ params }) => {
+  const [aiResultloading, setaiResultLoading] = useState(false);
+  const [aiResultString, setaiResultString] = useState("");
 
-  const { user } = useUser();
 
-  const templateSlug: SlugEnum = Object.values(params)[0];
-  const selectedTemplate: TEMPLATE | undefined =
+  const templateSlug = Object.values(params)[0];
+  const selectedTemplate =
     getTemplateBySlug(templateSlug);
 
-  const onGenerateAIContent = async (formData: any) => {
+  const onGenerateAIContent = async (formData) => {
     const templatePrompts = selectedTemplate?.aiPrompts;
 
     const prompt = `${JSON.stringify(formData)}, ${templatePrompts}`;

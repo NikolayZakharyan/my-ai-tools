@@ -23,14 +23,14 @@ export interface TEMPLATE {
   icon: string;
   bgImage: string;
   aiPrompts: string;
-  slug: SlugEnum;  // Updated slug type to use the Slug enum
+  slug: SlugEnum; // Updated slug type to use the Slug enum
   form: FORM[];
   likes?: number;
 }
 
 export const getTemplateBySlug = (slug: SlugEnum) => {
-  return templates.find(template => template.slug === slug) ;
-}
+  return templates.find((template) => template.slug === slug);
+};
 
 const templates: TEMPLATE[] = [
   {
@@ -39,7 +39,8 @@ const templates: TEMPLATE[] = [
     category: "Blog",
     icon: "/template-icons/blog-title.svg",
     bgImage: "https://picsum.photos/300/200?random=1",
-    aiPrompts: "Generate a catchy blog title based on the provided niche and outline. Use keywords and phrases that are relevant to the blog's content.",
+    aiPrompts:
+      "Generate a catchy blog title based on the provided niche and outline. Use keywords and phrases that are relevant to the blog's content.",
     slug: SlugEnum.BlogTitle,
     form: [
       {
@@ -61,7 +62,8 @@ const templates: TEMPLATE[] = [
     category: "E-commerce",
     icon: "/template-icons/product-description.svg",
     bgImage: "https://picsum.photos/300/200?random=2",
-    aiPrompts: "Generate a detailed product description based on the product's features and benefits. Include persuasive language to encourage purchases.",
+    aiPrompts:
+      "Generate a detailed product description based on the product's features and benefits. Include persuasive language to encourage purchases.",
     slug: SlugEnum.ProductDescription,
     form: [
       {
@@ -83,7 +85,8 @@ const templates: TEMPLATE[] = [
     category: "Social Media",
     icon: "/template-icons/social-media-post.svg",
     bgImage: "https://picsum.photos/300/200?random=3",
-    aiPrompts: "Generate an engaging social media post based on the provided content and target audience. Use hashtags and mentions appropriately.",
+    aiPrompts:
+      "Generate an engaging social media post based on the provided content and target audience. Use hashtags and mentions appropriately.",
     slug: SlugEnum.SocialMediaPost,
     form: [
       {
@@ -105,7 +108,8 @@ const templates: TEMPLATE[] = [
     category: "Email Marketing",
     icon: "/template-icons/email-newsletter.svg",
     bgImage: "https://picsum.photos/300/200?random=4",
-    aiPrompts: "Generate an email newsletter based on the provided content and audience. Include headlines, subheadings, and calls to action.",
+    aiPrompts:
+      "Generate an email newsletter based on the provided content and audience. Include headlines, subheadings, and calls to action.",
     slug: SlugEnum.EmailNewsletter,
     form: [
       {
@@ -127,7 +131,8 @@ const templates: TEMPLATE[] = [
     category: "Career",
     icon: "/template-icons/resume-builder.svg",
     bgImage: "https://picsum.photos/300/200?random=5",
-    aiPrompts: "Generate a professional resume based on the provided personal information, work experience, and skills. Ensure proper formatting and structure.",
+    aiPrompts:
+      "Generate a professional resume based on the provided personal information, work experience, and skills. Ensure proper formatting and structure.",
     slug: SlugEnum.Resume,
     form: [
       {
@@ -156,7 +161,8 @@ const templates: TEMPLATE[] = [
     category: "Communication",
     icon: "/template-icons/email-response.svg",
     bgImage: "https://picsum.photos/300/200?random=6",
-    aiPrompts: "Generate an appropriate email response based on the provided context and requirements. Maintain a professional tone and clarity.",
+    aiPrompts:
+      "Generate an appropriate email response based on the provided context and requirements. Maintain a professional tone and clarity.",
     slug: SlugEnum.EmailResponse,
     form: [
       {
@@ -178,7 +184,8 @@ const templates: TEMPLATE[] = [
     category: "Design",
     icon: "/template-icons/image-generator.svg",
     bgImage: "https://picsum.photos/300/200?random=7",
-    aiPrompts: "Generate a unique image based on the provided description and parameters. Ensure high quality and relevance to the description.",
+    aiPrompts:
+      "Generate a unique image based on the provided description and parameters. Ensure high quality and relevance to the description.",
     slug: SlugEnum.ImageGenerator,
     form: [
       {
@@ -200,7 +207,8 @@ const templates: TEMPLATE[] = [
     category: "Programming",
     icon: "/template-icons/code-reviewer.svg",
     bgImage: "https://picsum.photos/300/200?random=8",
-    aiPrompts: "Review the provided code snippet and provide feedback on its quality, efficiency, and adherence to best practices.",
+    aiPrompts:
+      "Review the provided code snippet and provide feedback on its quality, efficiency, and adherence to best practices.",
     slug: SlugEnum.CodeReviewer,
     form: [
       {

@@ -1,9 +1,10 @@
 import { drizzle } from "drizzle-orm/neon-http";
 import * as schema from "./schema";
 import { users, emailAddresses } from "./schema";
-import { sql } from "../../sql";
+import { neon_sql } from "../../sql";
+import { eq } from "drizzle-orm";
 
-const db = drizzle(sql, { schema });
+const db = drizzle(neon_sql, { schema });
 
 export const _createUser = async (clerkUser: any) => {
   const user = await db
@@ -43,4 +44,27 @@ export const _emailAddresse = async () => {
   });
 
   return a;
+};
+
+export const _getUserIdByClarkId = async (currectUserClarkId: string) => {
+  let getuserId;
+  try {
+    getuserId = await db
+      .select({
+        id: users.id,
+      })
+      .from(users)
+      .where(eq(users.clerkId, currectUserClarkId));
+  } catch (error) {
+    console.error("Error fetching user ID:", error);
+    throw new Error("Error fetching user ID");
+  }
+  const userId = getuserId.length > 0 ? getuserId[0] : null;
+
+  if (!userId) {
+    console.error("User ID not found");
+    throw new Error("User ID not found");
+  }
+
+  return getuserId;
 };
