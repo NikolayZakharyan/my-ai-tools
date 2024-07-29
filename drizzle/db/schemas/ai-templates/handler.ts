@@ -3,6 +3,7 @@ import * as schema from "./schema";
 import { neon_sql } from "../../sql";
 import { asc, desc, eq, sql } from "drizzle-orm";
 import { _getUserIdByClarkId } from "../users/handler";
+import { users } from "../users/schema";
 
 const db = drizzle(neon_sql, { schema });
 
@@ -18,6 +19,10 @@ export const _getAiTemplates = async () => {
           sql`LOWER(CONCAT('https://picsum.photos/300/200?random=', ${schema.aiTemplates.id}))`.as(
             "bgImage"
           ),
+        createdBy:
+          sql`(SELECT CONCAT(${users.firstName}, ' ', ${users.lastName}) FROM ${users} WHERE ${users.id} = ${schema.aiTemplates.userId})`.as(
+            "createdBy"
+          ),
       },
     });
     return result;
@@ -27,7 +32,20 @@ export const _getAiTemplates = async () => {
 export const _getTemplateById = async (templateId: String) => {
   try {
     const result = await db
-      .select()
+      .select({
+        ...schema.aiTemplates, // Select all fields from aiTemplates
+        slug: sql`LOWER(REPLACE(${schema.aiTemplates.name}, ' ', '-'))`.as(
+          "slug"
+        ),
+        bgImage:
+          sql`LOWER(CONCAT('https://picsum.photos/300/200?random=', ${schema.aiTemplates.id}))`.as(
+            "bgImage"
+          ),
+        createdBy:
+          sql`(SELECT CONCAT(${users.firstName}, ' ', ${users.lastName}) FROM ${users} WHERE ${users.id} = ${schema.aiTemplates.userId})`.as(
+            "createdBy"
+          ),
+      } as any)
       .from(schema.aiTemplates)
       .where(eq(schema.aiTemplates.id, +templateId));
 

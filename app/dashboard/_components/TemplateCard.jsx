@@ -38,6 +38,9 @@ const TemplateCard = ({ templateItem, order, resultCallback }) => {
           <p className="text-primary mt-1 text-sm">
             Category: {templateItem.aiTemplateCategory}
           </p>
+          <p className="text-primary mt-1 text-sm">
+            Autor: {templateItem.createdBy}
+          </p>
         </div>
       </Link>
 
