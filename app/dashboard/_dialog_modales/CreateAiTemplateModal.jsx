@@ -32,31 +32,9 @@ import {
 import { _createAiTemplate } from "@/drizzle/db/schemas/ai-templates/handler";
 import { useUser } from "@clerk/nextjs";
 
-// userId: integer("userId").references(() => users.id),
-
-// name: varchar("name", { length: 80 })
-//   .notNull()
-//   .default("My ai template name"),
-
-// description: varchar("description", { length: 255 }).default(
-//   "Ai description for intraduce specifictions"
-// ),
-
-// aiPrompt: text("ai_prompt")
-//   .notNull()
-//   .default("Set yours ai specific promps..."),
-
-// aiTemplateCategory: aiTemplateCategoryEnum("aiTemplateCategory")
-//   .default(defaultAiTemplateCategory)
-//   .notNull(),
-
-// form: json("form")
-//   .$type<form>()
-//   .default([{ field: defaultAiFormField, require: false }]),
-
 const CreateAiTemplateModal = ({}) => {
   const { user } = useUser();
-
+  const [open, setOpen] = useState(false);
   const [templateData, settemplateData] = useState({
     name: "Ai template default name",
     description: "Ai template default description",
@@ -126,6 +104,7 @@ const CreateAiTemplateModal = ({}) => {
       currectUserClarkId: user.id,
     });
 
+    setOpen(false);
     console.log(response);
   };
 
@@ -145,7 +124,7 @@ const CreateAiTemplateModal = ({}) => {
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="outline">Create new tempalte</Button>
       </DialogTrigger>

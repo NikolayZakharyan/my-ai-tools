@@ -9,15 +9,6 @@ import CreateAiTemplateModal from "../_dialog_modales/CreateAiTemplateModal";
 
 const SearchSection = () => {
   const { user } = useUser();
-  // const userV = useAuth();
-
-  // console.log(userV);
-
-  const createNewAiTemplate = () => {
-    _createAiTemplate({
-      currectUserClarkId: user?.id,
-    });
-  };
 
   return (
     <div className="w-full border rounded-lg flex flex-col items-center p-2 gap-2">
@@ -36,10 +27,6 @@ const SearchSection = () => {
         </div>
 
         <div>
-          {/* <Button type={"button"} onClick={createNewAiTemplate}>
-            Create new AI template
-          </Button> */}
-
           <CreateAiTemplateModal />
         </div>
       </div>

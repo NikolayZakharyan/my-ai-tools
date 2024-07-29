@@ -3,16 +3,11 @@ import Image from "next/image";
 // import { Heart, MessageSquare } from "lucide-react";
 import Link from "next/link";
 
-
-
-
-const TemplateCard= ({ templateItem, order }) => {
-
-
-
+const TemplateCard = ({ templateItem, order }) => {
+  const { slug, id } = templateItem;
 
   return (
-    <Link href={`/dashboard/content/${templateItem.id}`}>
+    <Link href={`/dashboard/content/${slug}-${id}`}>
       <div className="bg-white hover:bg-gray-500 shadow-xl hover:shadow-none cursor-pointer w-80 rounded-3xl flex flex-col items-center justify-center transition-all duration-500 ease-in-out">
         <div className="relative mt-2 mx-2">
           <div className="h-56 rounded-2xl overflow-hidden">

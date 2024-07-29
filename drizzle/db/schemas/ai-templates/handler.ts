@@ -1,7 +1,7 @@
 import { drizzle } from "drizzle-orm/neon-http";
 import * as schema from "./schema";
 import { neon_sql } from "../../sql";
-import { sql } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { _getUserIdByClarkId } from "../users/handler";
 
 const db = drizzle(neon_sql, { schema });
@@ -10,23 +10,34 @@ export const _getAiTemplates = async () => {
   try {
     const result = await db.query.aiTemplates.findMany({
       extras: {
-        slug: sql`REPLACE(${schema.aiTemplates.name},' ','-')`.as("slug"),
+        slug: sql`LOWER(REPLACE(${schema.aiTemplates.name},' ','-'))`.as(
+          "slug"
+        ),
+        bgImage:
+          sql`LOWER(CONCAT('https://picsum.photos/300/200?random=', ${schema.aiTemplates.id}))`.as(
+            "bgImage"
+          ),
       },
     });
     return result;
   } catch (error) {}
-  // const res = await db
-  //   .select({
-  //     aiPrompt: schema.aiTemplates.aiPrompt,
-  //     slug: sql`${schema.aiTemplates.aiPrompt}`.as("slug"),
-  //   })
-  //   .from(schema.aiTemplates);
+};
+
+export const _getTemplateById = async (templateId: String) => {
+  try {
+    const result = await db
+      .select()
+      .from(schema.aiTemplates)
+      .where(eq(schema.aiTemplates.id, +templateId));
+
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export const _createAiTemplate = async (aiTemplateData: any) => {
   const userId = await _getUserIdByClarkId(aiTemplateData.currectUserClarkId);
-
-  console.log(aiTemplateData);
 
   const result = await db
     .insert(schema.aiTemplates)

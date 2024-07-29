@@ -5,34 +5,44 @@ import OutputContentSection from "../_components/OutputContentSection";
 import { TEMPLATE, getTemplateBySlug, SlugEnum } from "@/app/(data)/templates";
 import { chatSession } from "@/utils/AiModul";
 import { _createAiOutput } from "@/drizzle/db/schemas/ai-output/handler";
-
+import { _getTemplateById } from "@/drizzle/db/schemas/ai-templates/handler";
 
 const ContentPage = ({ params }) => {
   const [aiResultloading, setaiResultLoading] = useState(false);
   const [aiResultString, setaiResultString] = useState("");
+  const [selectedTemplate, setselectedTemplate] = useState(null);
 
+  const [loading, setloading] = useState(true);
 
   const templateSlug = Object.values(params)[0];
-  const selectedTemplate =
-    getTemplateBySlug(templateSlug);
+  const templateId = templateSlug.split("-").slice(-1)[0];
+
+  const onGetAiTemplateById = async () => {
+    setloading(true);
+    const res = await _getTemplateById(templateId);
+    setselectedTemplate(res[0]);
+    setloading(false);
+    return res[0];
+  };
+
+  useEffect(() => {
+    onGetAiTemplateById();
+  }, []);
+
+  console.log(selectedTemplate);
 
   const onGenerateAIContent = async (formData) => {
     const templatePrompts = selectedTemplate?.aiPrompts;
-
     const prompt = `${JSON.stringify(formData)}, ${templatePrompts}`;
-
     setaiResultLoading(true);
-
     try {
       const aiResult = await chatSession.sendMessage(prompt);
-
       const result = await _createAiOutput(
         formData,
         templateSlug,
         aiResult.response.text(),
         user
       );
-
       setaiResultString(aiResult.response.text());
     } catch (error) {
       console.error("Error generating AI content:", error);
@@ -42,8 +52,9 @@ const ContentPage = ({ params }) => {
     }
   };
 
-  if (selectedTemplate === undefined)
-    return <>SOMTHING GET WRONG: {templateSlug}</>;
+  if (loading) return <>LOADING ...</>;
+
+  if (!selectedTemplate) return <>SOMTHING GET WRONG: {templateSlug}</>;
 
   return (
     <div className="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
